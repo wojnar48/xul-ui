@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import SearchItem from '../SearchItem';
+import Filter from '../Filter';
 
 
 const ALL_SEARCH_ITEMS_QUERY = gql`
@@ -14,11 +14,10 @@ const ALL_SEARCH_ITEMS_QUERY = gql`
   }
 `;
 
-class SearchItems extends Component {
+class Filters extends Component {
   render() {
     return (
       <div>
-        <p>Search Items</p>
         <Query query={ALL_SEARCH_ITEMS_QUERY}>
           {({ data, loading, error }) => {
             if (loading) return <p>Loading...</p>;
@@ -27,7 +26,7 @@ class SearchItems extends Component {
             return (
               <div>
                 {data.searchItems.map((item) =>
-                  <SearchItem key={item.id} item={item} />)}
+                  <Filter key={item.id} item={item} />)}
               </div>
             );
           }}
@@ -37,5 +36,5 @@ class SearchItems extends Component {
   }
 }
 
-export default SearchItems;
+export default Filters;
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SearchItem = ({ item }) => {
+const Filter = ({ item }) => {
   return (
     <div>{item.text}</div>
   );
 };
 
-export default SearchItem;
+export default Filter;

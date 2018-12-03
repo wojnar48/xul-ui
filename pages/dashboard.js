@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-import SearchItems from '../components/SearchItems';
+import Filters from '../components/Filters';
 
 const Dashboard = props => (
   <div>
-    <SearchItems />
+    <Filters />
   </div>
 );
 
