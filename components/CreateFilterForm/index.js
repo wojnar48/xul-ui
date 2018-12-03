@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
 
 export const CREATE_FILTER_MUTATION = gql`
   mutation CREATE_FILTER_MUTATION(
@@ -45,9 +43,10 @@ class CreateFilterForm extends Component {
       // Invoke the closed over mutation
       const res = await createFilter();
       // Route the user from whence they came
-      Router.push({
-        pathname: '/dashboard',
-      });
+      // NOTE(SW): We use a hard redirect here instead of `Router.push`
+      // to make sure the `Filters` component rerenders reflecting the
+      // new addition.
+      window.location.href = '/dashboard'
   };
 
   render() {
