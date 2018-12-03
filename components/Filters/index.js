@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import FilterTable from '../FilterTable';
+import CreateFilterModal from '../CreateFilterModal';
 
 
 const ALL_FILTERS_QUERY = gql`
@@ -17,6 +18,15 @@ const ALL_FILTERS_QUERY = gql`
 `;
 
 class Filters extends Component {
+  // TODO(SW): Add a global Loading and Error components that can be reused
+  state = {
+    modalIsOpen: false,
+  };
+
+  toggleModalState = () => {
+    this.setState((state) => ({ modalIsOpen: !state.modalIsOpen }));
+  };
+
   render() {
     return (
       <section className='section dashboard-section'>
@@ -28,7 +38,10 @@ class Filters extends Component {
                   <h3 className='title has-text-grey'>Filters</h3>
                 </div>
                 <div className='level-right'>
-                  <button className='button is-primary'>
+                  <button
+                    className='button is-primary'
+                    onClick={this.toggleModalState}
+                  >
                     Add Filter
                   </button>
                 </div>
@@ -46,6 +59,10 @@ class Filters extends Component {
             </div>
           </div>
         </div>
+        <CreateFilterModal
+          modalIsOpen={this.state.modalIsOpen}
+          toggleModalState={this.toggleModalState}
+        />
       </section>
     );
   }
