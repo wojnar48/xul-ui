@@ -51,7 +51,6 @@ class CreateFilterForm extends Component {
   };
 
   render() {
-    const { toggleModalState } = this.props;
     const { name, filterTerms } = this.state;
     // TODO(SW): Fix this hack and store filterTerms in the proper format
     const variables = { name, filterTerms: filterTerms.split(',') };
@@ -100,9 +99,7 @@ class CreateFilterForm extends Component {
                   </button>
                 </div>
                 <div className="control">
-                  <button
-                    className="button is-text"
-                    onClick={toggleModalState}>
+                  <button className="button is-text">
                     Cancel
                   </button>
                 </div>
