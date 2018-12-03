@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -42,6 +43,9 @@ class CreateFilterForm extends Component {
       e.preventDefault();
       // Invoke the closed over mutation
       const res = await createFilter();
+      // TODO(SW): Confirm if it is possible to manually add the added filter
+      // to Apollo's cache using the update function.
+
       // Route the user from whence they came
       // NOTE(SW): We use a hard redirect here instead of `Router.push`
       // to make sure the `Filters` component rerenders reflecting the
@@ -99,7 +103,9 @@ class CreateFilterForm extends Component {
                 </div>
                 <div className="control">
                   <button className="button is-text">
-                    Cancel
+                    <Link href='/dashboard'>
+                      <a>Cancel</a>
+                    </Link>
                   </button>
                 </div>
               </div>
