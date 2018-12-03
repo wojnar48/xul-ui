@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import FilterTable from '../FilterTable';
 
 
-const ALL_FILTERS_QUERY = gql`
+export const ALL_FILTERS_QUERY = gql`
   query ALL_SEARCH_ITEMS_QUERY {
     filters {
       id
