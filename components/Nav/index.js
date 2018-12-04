@@ -26,12 +26,16 @@ const Nav = () => (
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-white is-outlined">
-                <strong>Log in</strong>
-              </a>
-              <a className="button is-primary is-outlined">
-                Sign up
-              </a>
+              <Link href='/login'>
+                <a className="button is-white is-outlined">
+                  <strong>Log in</strong>
+                </a>
+              </Link>
+              <Link href='/signup'>
+                <a className="button is-primary is-outlined">
+                  Sign up
+                </a>
+              </Link>
             </div>
           </div>
         </div>
