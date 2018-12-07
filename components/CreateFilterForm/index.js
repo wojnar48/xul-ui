@@ -62,55 +62,65 @@ class CreateFilterForm extends Component {
       <Mutation mutation={CREATE_FILTER_MUTATION} variables={variables}>
         {(createFilter, { loading, error }) => (
           // TODO(SW): Disable the form while loading=true to prevent double submit
-          <form onSubmit={this.createHandleSubmit(createFilter)}>
-            <div className='box'>
-              <div className="field">
-                <label className="label">Filter Name</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    name='name'
-                    type="text"
-                    placeholder="Filter Name..."
-                    value={name}
-                    onChange={this.handleInputChange}
-                   />
-                </div>
-              </div>
+          <section className="section has-background-white-ter" style={{ height: '100vh' }}>
+            <div className="container">
+              <div className="columns">
+                <div className="column">
+                  <div className="box">
+                    <form onSubmit={this.createHandleSubmit(createFilter)}>
+                      <div className='box'>
+                        <div className="field">
+                          <label className="label">Filter Name</label>
+                          <div className="control">
+                            <input
+                              className="input"
+                              name='name'
+                              type="text"
+                              placeholder="Filter Name..."
+                              value={name}
+                              onChange={this.handleInputChange}
+                            />
+                          </div>
+                        </div>
 
-              <div className="field">
-                <label className="label">Filter Terms</label>
-                <div className="control">
-                  <input
-                    className="input"
-                    name='filterTerms'
-                    type="text"
-                    placeholder="Enter list of strings"
-                    value={filterTerms}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-              </div>
+                        <div className="field">
+                          <label className="label">Filter Terms</label>
+                          <div className="control">
+                            <input
+                              className="input"
+                              name='filterTerms'
+                              type="text"
+                              placeholder="Enter list of strings"
+                              value={filterTerms}
+                              onChange={this.handleInputChange}
+                            />
+                          </div>
+                        </div>
 
-              <div className="field is-grouped">
-                <div className="control">
-                  <button
-                    className="button is-primary"
-                    type='submit'
-                  >
-                    Submit
-                  </button>
-                </div>
-                <div className="control">
-                  <button className="button is-text">
-                    <Link href='/dashboard'>
-                      <a>Cancel</a>
-                    </Link>
-                  </button>
+                        <div className="field is-grouped">
+                          <div className="control">
+                            <button
+                              className="button is-primary"
+                              type='submit'
+                            >
+                              Submit
+                            </button>
+                          </div>
+                          <div className="control">
+                            <button className="button is-text">
+                              <Link href='/dashboard'>
+                                <a>Cancel</a>
+                              </Link>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
+          </section>
         )}
       </Mutation>
     );
