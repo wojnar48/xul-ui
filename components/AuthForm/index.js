@@ -10,6 +10,7 @@ import {
   LOGIN_MUTATION
 } from '../../graphql';
 
+
 const AuthFormContainer = (props) => {
   const { router } = props;
     
@@ -19,12 +20,12 @@ const AuthFormContainer = (props) => {
   const mutation = isLogin ? LOGIN_MUTATION : SIGNUP_MUTATION;
     
   return (
-    <section className="section has-background-white-ter" style={{ height: '100vh' }}>
-      <div className="container">
-        <div className="columns">
-          <div className='column is-4'></div>
-          <div className="column is-4">
-            <div className="box">
+    <section className='section has-background-white-ter' style={{ height: '100vh' }}>
+      <div className='container'>
+        <div className='columns'>
+          <div className='column is-4' />
+          <div className='column is-4'>
+            <div className='box'>
               <Mutation
                 mutation={mutation}
                 refetchQueries={[{ query: CURRENT_USER_QUERY }]}
@@ -39,7 +40,7 @@ const AuthFormContainer = (props) => {
               </Mutation>
             </div>
           </div>
-          <div className='column is-4'></div>
+          <div className='column is-4' />
         </div>
       </div>
     </section>
