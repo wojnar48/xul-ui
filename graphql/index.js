@@ -18,3 +18,15 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const CURRENT_USER_QUERY = gql`
+  query {
+    me {
+      id
+      email
+      username
+      permissions
+    }
+  }
+`;
+

@@ -1,18 +1,5 @@
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-
-
-export const CURRENT_USER_QUERY = gql`
-  query {
-    me {
-      id
-      email
-      username
-      permissions
-    }
-  }
-`;
 
 // A convenience component that will allow us to easily get
 // the current use without nesting `Query` wherever the data
