@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import uniqid from 'uniqid';
+
+import AddFilterTerm from './AddFilterTerm';
+
 
 export const CREATE_FILTER_MUTATION = gql`
   mutation CREATE_FILTER_MUTATION(
@@ -23,13 +27,30 @@ export const CREATE_FILTER_MUTATION = gql`
 class CreateFilterForm extends Component {
   state = {
     name: '',
-    filterTerms: '',
+    filterTags: [],
   };
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
-
     this.setState({ [name]: value });
+  };
+
+  handleFilterTagAdd = (filterTerm) => {
+    // Update the array of filter tags with the new tag
+    const filterTags = [
+      ...this.state.filterTags,
+      { id: uniqid(), text: filterTerm }
+    ];
+
+    this.setState({ filterTags });
+  };
+
+  handleFilterTagRemove = (filterTermId) => {
+    const { filterTags } = this.state;
+
+    // Filter out the tag to be removed
+    const updatedFilterTags = filterTags.filter(ftag => ftag.id !== filterTermId);
+    this.setState({ filterTags: updatedFilterTags });
   };
 
   // This is a factory fn that wraps the createFilter mutation passed by
@@ -54,12 +75,13 @@ class CreateFilterForm extends Component {
   };
 
   render() {
-    const { name, filterTerms } = this.state;
-    // TODO(SW): Fix this hack and store filterTerms in the proper format
-    const variables = { name, filterTerms: filterTerms.split(',') };
+    const { name, filterTags } = this.state;
+    // Generate filterTerms (array of strings) from filterTags (array of { id, text }).
+    // We do this because GraphQL expects filterTerms to be an array of strings.
+    const filterTerms = filterTags.map(ftag => ftag.text);
 
     return (
-      <Mutation mutation={CREATE_FILTER_MUTATION} variables={variables}>
+      <Mutation mutation={CREATE_FILTER_MUTATION} variables={{ name, filterTerms }}>
         {(createFilter, { loading, error }) => (
           // TODO(SW): Disable the form while loading=true to prevent double submit
           <section className="section has-background-white-ter" style={{ height: '100vh' }}>
@@ -83,19 +105,11 @@ class CreateFilterForm extends Component {
                           </div>
                         </div>
 
-                        <div className="field">
-                          <label className="label">Filter Terms</label>
-                          <div className="control">
-                            <input
-                              className="input"
-                              name='filterTerms'
-                              type="text"
-                              placeholder="Enter list of strings"
-                              value={filterTerms}
-                              onChange={this.handleInputChange}
-                            />
-                          </div>
-                        </div>
+                        <AddFilterTerm
+                          filterTags={filterTags}
+                          removeTag={this.handleFilterTagRemove}
+                          addTag={this.handleFilterTagAdd}
+                        />
 
                         <div className="field is-grouped">
                           <div className="control">
