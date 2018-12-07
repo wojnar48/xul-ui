@@ -1,5 +1,6 @@
 import { Query } from 'react-apollo';
 import PropTypes from 'prop-types';
+import { CURRENT_USER_QUERY } from '../../graphql';
 
 // A convenience component that will allow us to easily get
 // the current use without nesting `Query` wherever the data
