@@ -1,30 +1,14 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 
 import AuthForm from './AuthForm';
 import { CURRENT_USER_QUERY } from '../User';
-
-
-export const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION($email: String!, $username: String!, $password: String!) {
-    signup(email: $email, username: $username, password: $password) {
-      id
-      email
-    }
-  }
-`;
-
-export const LOGIN_MUTATION = gql`
-  mutation LOGIN_MUTATION($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
-    }
-  }
-`;
+import {
+  SIGNUP_MUTATION,
+  LOGIN_MUTATION
+} from '../../graphql';
 
 const AuthFormContainer = (props) => {
   const { router } = props;
