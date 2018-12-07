@@ -5,6 +5,8 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 
+import { CURRENT_USER_QUERY } from '../User';
+
 
 export const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION($email: String!, $username: String!, $password: String!) {
@@ -50,6 +52,10 @@ class AuthForm extends Component {
       e.preventDefault();
       await mutation();
 
+      // Redirect to the dashboard
+      // TODO(SW): Investigate why using this.props.router and Router does not work.
+      window.location.href = '/dashboard';
+
       // Clear state
       this.setState({ email: '', username: '', password: '' });
   };
@@ -71,7 +77,11 @@ class AuthForm extends Component {
             <div className='column is-4'></div>
             <div className="column is-4">
               <div className="box">
-                <Mutation mutation={mutation} variables={this.state}>
+                <Mutation
+                  mutation={mutation}
+                  variables={this.state}
+                  refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+                >
                   {(mutationCallback, { error, loading }) => (
                     <form method='post' onSubmit={this.createHandleSubmit(mutationCallback)}>
                       <fieldset disabled={loading} aria-busy={loading} style={{ border: 'none' }}>
