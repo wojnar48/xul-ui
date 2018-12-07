@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import FilterTable from '../FilterTable';
+import FilterTable from './FilterTable';
 import RequiresAuth from '../RequiresAuth';
 
 
