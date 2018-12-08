@@ -30,3 +30,21 @@ export const CURRENT_USER_QUERY = gql`
   }
 `;
 
+export const ALL_FILTERS_QUERY = gql`
+  query ALL_SEARCH_ITEMS_QUERY {
+    filters {
+      id
+      name
+      filterTerms
+      createdAt
+    }
+  }
+`;
+
+export const DELETE_FILTER_MUTATION = gql`
+  mutation DELETE_FILTER_MUTATION($id: ID!) {
+    deleteFilter(id: $id) {
+      id
+    }
+  }
+`;

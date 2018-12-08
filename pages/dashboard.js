@@ -1,8 +1,8 @@
-import Filters from '../components/Filters';
-import RequiresAuth from '../components/RequiresAuth';
+import Dashboard from '../components/Dashboard';
 
-const Dashboard = (props) => (
-    <Filters />
+
+const DashboardContainer = (props) => (
+  <Dashboard />
 );
 
-export default Dashboard;
+export default DashboardContainer;

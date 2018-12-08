@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import { ALL_FILTERS_QUERY } from '../Filters';
+import { ALL_FILTERS_QUERY, DELETE_FILTER_MUTATION } from '../../graphql';
 
 
 // A helper function that takes a list of string tokens and returns Bulma CSS tags
@@ -13,15 +12,6 @@ const renderTags = (tokens) => (
     {tokens.map((token, idx) => <span key={idx} className='tag is-warning'>{token}</span>)}
   </div>
 );
-
-// TODO(SW): Generalize this into a reusable component
-export const DELETE_FILTER_MUTATION = gql`
-  mutation DELETE_FILTER_MUTATION($id: ID!) {
-    deleteFilter(id: $id) {
-      id
-    }
-  }
-`;
 
 class FilterTable extends Component {
   static propTypes = {

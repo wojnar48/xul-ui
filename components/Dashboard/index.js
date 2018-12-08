@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import FilterTable from './FilterTable';
 import RequiresAuth from '../RequiresAuth';
+import { ALL_FILTERS_QUERY } from '../../graphql';
 
 
-export const ALL_FILTERS_QUERY = gql`
-  query ALL_SEARCH_ITEMS_QUERY {
-    filters {
-      id
-      name
-      filterTerms
-      createdAt
-    }
-  }
-`;
-
-class Filters extends Component {
+class Dashboard extends Component {
   // TODO(SW): Add a global Loading and Error components that can be reused
 
   render() {
@@ -59,5 +48,5 @@ class Filters extends Component {
   }
 }
 
-export default Filters;
+export default Dashboard;
 
