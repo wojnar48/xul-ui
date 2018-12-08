@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
+import NProgress from 'nprogress';
 import PropTypes from 'prop-types';
 
 import { ALL_FILTERS_QUERY, DELETE_FILTER_MUTATION } from '../../graphql';
@@ -33,6 +34,7 @@ class FilterTable extends Component {
   }
 
   handleDeleteFilter = (filterId, deleteFilterMutation) => {
+    NProgress.start();
     deleteFilterMutation({ variables: { id: filterId } });
   };
 
@@ -42,10 +44,11 @@ class FilterTable extends Component {
     return (
       <Mutation
         mutation={DELETE_FILTER_MUTATION}
+        onCompleted={() => NProgress.done()}
+        onError={() => NProgress.done()}
         update={this.update}
       >
         {(deleteFilter, { error, loading }) => {
-          if (loading) return <div>Loading...</div>;
 
           return (
             <table className='table is-hoverable is-fullwidth'>
@@ -67,6 +70,7 @@ class FilterTable extends Component {
                       <button
                         className='button is-danger is-small'
                         onClick={() => this.handleDeleteFilter(filter.id, deleteFilter)}
+                        disabled={loading}
                       >
                         Delete
                       </button>
