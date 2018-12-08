@@ -36,6 +36,13 @@ class AddFilter extends Component {
     this.setState({ [name]: value });
   };
 
+  handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.handleAddTag();
+    }
+  };
+
   render() {
     const { filter } = this.state;
     const { filterTags, removeTag } = this.props;
@@ -57,6 +64,7 @@ class AddFilter extends Component {
             <div className='field'>
               <input
                 onChange={this.handleInputChange}
+                onKeyDown={this.handleEnter}
                 className='input'
                 name='filter'
                 type='text'

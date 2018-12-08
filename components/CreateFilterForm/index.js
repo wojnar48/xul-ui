@@ -59,7 +59,6 @@ class CreateFilterForm extends Component {
   createHandleSubmit = (createFilter) =>
     async (e) => {
       // TODO(SW): Confirm what happens if `createFilter` fails.
-
       // Prevent default and delegate submission to React
       e.preventDefault();
       // Invoke the closed over mutation
@@ -89,7 +88,7 @@ class CreateFilterForm extends Component {
               <div className="columns">
                 <div className="column">
                   <div className="box">
-                    <form onSubmit={this.createHandleSubmit(createFilter)}>
+                    <form action='post'>
                       <div className='box'>
                         <div className="field">
                           <label className="label">Filter Name</label>
@@ -115,7 +114,8 @@ class CreateFilterForm extends Component {
                           <div className="control">
                             <button
                               className="button is-primary"
-                              type='submit'
+                              onClick={this.createHandleSubmit(createFilter)}
+                              type='button'
                             >
                               Submit
                             </button>
