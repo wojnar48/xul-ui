@@ -4,10 +4,10 @@ import { Mutation } from 'react-apollo';
 import PropTypes from 'prop-types';
 
 import AuthForm from './AuthForm';
-import { CURRENT_USER_QUERY } from '../User';
 import {
   SIGNUP_MUTATION,
-  LOGIN_MUTATION
+  LOGIN_MUTATION,
+  CURRENT_USER_QUERY,
 } from '../../graphql';
 
 

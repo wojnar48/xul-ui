@@ -3,7 +3,8 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Link from 'next/link';
 
-import User, { CURRENT_USER_QUERY } from '../User';
+import User from '../User';
+import { CURRENT_USER_QUERY } from '../../graphql';
 
 // Create the sign out mutation
 export const SIGN_OUT_MUTATION = gql`
