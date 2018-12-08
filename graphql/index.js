@@ -48,3 +48,21 @@ export const DELETE_FILTER_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_FILTER_MUTATION = gql`
+  mutation CREATE_FILTER_MUTATION(
+    $name: String!
+    $filterTerms: [String!]!
+  ) {
+    createFilter(
+      name: $name
+      filterTerms: $filterTerms
+    ) {
+      id
+      name
+      filterTerms
+      createdAt
+    }
+  }
+`;
+

@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import uniqid from 'uniqid';
 
 import AddFilterTerm from './AddFilterTerm';
+import {
+  ALL_FILTERS_QUERY,
+  CREATE_FILTER_MUTATION,
+} from '../../graphql';
 
-
-export const CREATE_FILTER_MUTATION = gql`
-  mutation CREATE_FILTER_MUTATION(
-    $name: String!
-    $filterTerms: [String!]!
-  ) {
-    createFilter(
-      name: $name
-      filterTerms: $filterTerms
-    ) {
-      id
-      name
-      filterTerms
-      createdAt
-    }
-  }
-`;
 
 class CreateFilterForm extends Component {
   state = {
@@ -62,15 +51,13 @@ class CreateFilterForm extends Component {
       // Prevent default and delegate submission to React
       e.preventDefault();
       // Invoke the closed over mutation
+      NProgress.start();
       const res = await createFilter();
       // TODO(SW): Confirm if it is possible to manually add the added filter
       // to Apollo's cache using the update function.
 
-      // Route the user from whence they came
-      // NOTE(SW): We use a hard redirect here instead of `Router.push`
-      // to make sure the `Filters` component rerenders reflecting the
-      // new addition.
-      window.location.href = '/dashboard'
+      // Route the user to the dashboard view
+      Router.push({ pathname: '/dashboard' });
   };
 
   render() {
@@ -80,7 +67,14 @@ class CreateFilterForm extends Component {
     const filterTerms = filterTags.map(ftag => ftag.text);
 
     return (
-      <Mutation mutation={CREATE_FILTER_MUTATION} variables={{ name, filterTerms }}>
+      // TODO(SW): See if using update instead of refetchQueries would be better
+      <Mutation
+        mutation={CREATE_FILTER_MUTATION}
+        onCompleted={() => NProgress.done()}
+        onError={() => NProgress.done()}
+        refetchQueries={[{ query: ALL_FILTERS_QUERY }]}
+        variables={{ name, filterTerms }}
+      >
         {(createFilter, { loading, error }) => (
           // TODO(SW): Disable the form while loading=true to prevent double submit
           <section className="section has-background-white-ter" style={{ height: '100vh' }}>
