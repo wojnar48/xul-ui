@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
+import Router from 'next/router';
 import { Query } from 'react-apollo';
 
 import FilterTable from './FilterTable';
+import { Button } from '../Button';
 import User from '../User';
 import AuthFormContainer from '../AuthForm';
 import { ALL_FILTERS_QUERY } from '../../graphql';
@@ -29,11 +30,12 @@ class Dashboard extends Component {
                       <h3 className='title has-text-grey'>Filters</h3>
                     </div>
                     <div className='level-right'>
-                      <button className='button is-primary'>
-                        <Link href='/create-filter'>
-                          <a>Add Filter</a>
-                        </Link>
-                      </button>
+                      <Button
+                        className='is-primary'
+                        onClick={() => Router.push('/create-filter')}
+                      >
+                        Add filter
+                      </Button>
                     </div>
                   </nav>
                   <div className='box'>
