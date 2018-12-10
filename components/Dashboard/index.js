@@ -41,7 +41,12 @@ class Dashboard extends Component {
                         if (loading) return <p>Loading...</p>;
                         if (error) return <p>{`Error: ${error.message}`}</p>
                         
-                        return <FilterTable filters={data.filters} />;
+                        return (
+                          <FilterTable
+                            filters={data.filters}
+                            loading={loading}
+                          />
+                        );
                       }}
                     </Query>
                   </div>

@@ -3,10 +3,10 @@ import NProgress from 'nprogress';
 import Router from 'next/router';
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import uniqid from 'uniqid';
 
 import AddFilterTerm from './AddFilterTerm';
+import { Button } from '../Button';
 import {
   ALL_FILTERS_QUERY,
   CREATE_FILTER_MUTATION,
@@ -100,26 +100,31 @@ class CreateFilterForm extends Component {
 
                         <AddFilterTerm
                           filterTags={filterTags}
+                          loading={loading}
                           removeTag={this.handleFilterTagRemove}
                           addTag={this.handleFilterTagAdd}
                         />
 
                         <div className="field is-grouped">
                           <div className="control">
-                            <button
-                              className="button is-primary"
+                            <Button
+                              className='is-primary'
+                              isDisabled={loading}
+                              isLoading={loading}
                               onClick={this.createHandleSubmit(createFilter)}
-                              type='button'
                             >
                               Submit
-                            </button>
+                            </Button>
                           </div>
                           <div className="control">
-                            <button className="button is-text">
+                            <Button
+                              isLoading={loading}
+                              isDisabled={loading}
+                            >
                               <Link href='/dashboard'>
-                                <a>Cancel</a>
+                                <a className='has-text-black'>Cancel</a>
                               </Link>
-                            </button>
+                            </Button>
                           </div>
                         </div>
                       </div>

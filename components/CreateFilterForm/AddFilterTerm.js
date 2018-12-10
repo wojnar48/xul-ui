@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from '../Button';
+
 
 const makeTags = (filterTags, clickCallback) => {
   return filterTags.map(ftag => (
@@ -19,6 +21,7 @@ class AddFilter extends Component {
     addTag: PropTypes.func.isRequired,
     removeTag: PropTypes.func.isRequired,
     filterTags: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   state = {
@@ -45,7 +48,7 @@ class AddFilter extends Component {
 
   render() {
     const { filter } = this.state;
-    const { filterTags, removeTag } = this.props;
+    const { filterTags, removeTag, loading } = this.props;
 
     const tags = makeTags(filterTags, removeTag);
 
@@ -74,15 +77,17 @@ class AddFilter extends Component {
             </div>
           </div>
           <div className='column'>
-            <div
-              className='button is-primary'
+            <Button
+              className='is-primary'
+              isLoading={loading}
+              isDisabled={loading}
               onClick={this.handleAddTag}
             >
               <span className="icon">
                 <i className="fas fa-plus"></i>
               </span>
               <span>Add Filter</span>
-            </div>
+            </Button>
           </div>
         </div>
       </div>

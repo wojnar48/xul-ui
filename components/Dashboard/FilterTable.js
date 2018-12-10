@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import PropTypes from 'prop-types';
 
 import { ALL_FILTERS_QUERY, DELETE_FILTER_MUTATION } from '../../graphql';
+import { Button } from '../Button';
 
 
 // A helper function that takes a list of string tokens and returns Bulma CSS tags
@@ -17,6 +18,7 @@ const renderTags = (tokens) => (
 class FilterTable extends Component {
   static propTypes = {
     filters: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
   };
 
   update = (cache, payload) => {
@@ -39,7 +41,7 @@ class FilterTable extends Component {
   };
 
   render() {
-    const { filters } = this.props;
+    const { filters,loading } = this.props;
 
     return (
       <Mutation
@@ -67,13 +69,14 @@ class FilterTable extends Component {
                     <td className='has-text-centered'>{renderTags(filter.filterTerms)}</td>
                     <td className='has-text-centered'>{filter.createdAt}</td>
                     <td className='has-text-centered'>
-                      <button
-                        className='button is-danger is-small'
+                      <Button
+                        className='is-danger is-small'
                         onClick={() => this.handleDeleteFilter(filter.id, deleteFilter)}
-                        disabled={loading}
+                        isLoading={loading}
+                        isDisabled={loading}
                       >
                         Delete
-                      </button>
+                      </Button>
                     </td>
                   </tr>)
                 )}
