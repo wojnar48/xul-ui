@@ -10,6 +10,7 @@ import { ALL_FILTERS_QUERY } from '../../graphql';
 
 class Dashboard extends Component {
   // TODO(SW): Add a global Loading and Error components that can be reused
+  // TODO(SW): See if we can protect the route using getInitialProps in the app container
 
   render() {
     return (
