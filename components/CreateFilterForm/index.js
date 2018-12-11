@@ -43,6 +43,7 @@ class CreateFilterForm extends Component {
   };
 
   handleAddTag = () => {
+    // TODO(SW): Ensure that empty strings are not added.
     // Term to be added
     const newTerm = this.state.term;
   
@@ -94,6 +95,7 @@ class CreateFilterForm extends Component {
   
     // Generate filterTerms (array of strings) from filterTags (array of { id, text }).
     // We do this because GraphQL expects filterTerms to be an array of strings.
+    // TODO(SW): Find a better way to do this.
     const tags = makeTags(filterTags, this.handleFilterTagRemove);
     const filterTerms = filterTags.map(ftag => ftag.text);
 
