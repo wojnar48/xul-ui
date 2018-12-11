@@ -1,0 +1,25 @@
+.inputTerms {
+  display: flex;
+  align-items: center;
+}
+
+.inputTerm {
+  margin-right: 6px;
+}
+
+.inputInner {
+  border: none;
+  box-shadow: none;
+  height: 100%;
+  width: 100%;
+}
+
+.inputInner:focus {
+  outline-style: none;
+  box-shadow: none;
+}
+
+.inputInnter:active {
+  outline-style: none;
+  box-shadow: none;
+}
