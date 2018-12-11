@@ -43,12 +43,8 @@ class CreateFilterModal extends Component {
             </button>
           </header>
           <section className='modal-card-body'>
-            <CreateFilterForm />
+            <CreateFilterForm toggleModalState={this.toggleModalState} />
           </section>
-          <footer className='modal-card-foot'>
-            <Button className='is-primary'>Create Filter</Button>
-            <Button onClick={this.toggleModalState}>Cancel</Button>
-          </footer>
         </div>
       </div>
     );

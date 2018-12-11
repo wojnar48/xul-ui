@@ -90,9 +90,10 @@ class CreateFilterForm extends Component {
 
   render() {
     const { name, filterTags, term } = this.state;
+    const { toggleModalState } = this.props;
+  
     // Generate filterTerms (array of strings) from filterTags (array of { id, text }).
     // We do this because GraphQL expects filterTerms to be an array of strings.
-
     const tags = makeTags(filterTags, this.handleFilterTagRemove);
     const filterTerms = filterTags.map(ftag => ftag.text);
 
@@ -155,6 +156,18 @@ class CreateFilterForm extends Component {
                     <i className='fas fa-plus'></i>
                   </span>
                   <span>Add Term</span>
+                </Button>
+              </div>
+              <div className='column is-full modal-card-foot'>
+                <Button
+                  className='is-primary'
+                >
+                  Create Filter
+                </Button>
+                <Button
+                  onClick={toggleModalState}
+                >
+                  Cancel
                 </Button>
               </div>
             </div>
