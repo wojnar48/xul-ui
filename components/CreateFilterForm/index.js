@@ -67,6 +67,8 @@ class CreateFilterForm extends Component {
   // is submitted.
   createHandleSubmit = (createFilter) =>
     async (e) => {
+      const { toggleModalState } = this.props;
+
       // TODO(SW): Confirm what happens if `createFilter` fails.
       // Prevent default and delegate submission to React
       e.preventDefault();
@@ -76,8 +78,8 @@ class CreateFilterForm extends Component {
       // TODO(SW): Confirm if it is possible to manually add the added filter
       // to Apollo's cache using the update function.
 
-      // Route the user to the dashboard view
-      Router.push({ pathname: '/dashboard' });
+      // Close the modal
+      toggleModalState();
   };
 
   handleEnter = (e) => {
