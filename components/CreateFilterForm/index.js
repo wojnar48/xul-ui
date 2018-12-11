@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import NProgress from 'nprogress';
 import Router from 'next/router';
-import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 import uniqid from 'uniqid';
 
-import AddFilterTerm from './AddFilterTerm';
 import { Button } from '../Button';
 import {
   ALL_FILTERS_QUERY,
