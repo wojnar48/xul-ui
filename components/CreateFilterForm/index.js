@@ -12,10 +12,28 @@ import {
   CREATE_FILTER_MUTATION,
 } from '../../graphql';
 
+import styles from './styles.css';
+
+
+const makeTags = (filterTags, removeCallback) => {
+  return filterTags.map(ftag => (
+    <li key={ftag.id} className={styles.inputTerm}>
+      <div className='tag is-warning is-marginless'>
+        {ftag.text}
+        <div
+          className='delete is-small'
+          onClick={() => removeCallback(ftag.id)}
+        />
+      </div>
+    </li>
+  ));
+};
+
 
 class CreateFilterForm extends Component {
   state = {
     name: '',
+    term: '',
     filterTags: [],
   };
 
@@ -24,14 +42,17 @@ class CreateFilterForm extends Component {
     this.setState({ [name]: value });
   };
 
-  handleFilterTagAdd = (filterTerm) => {
+  handleAddTag = () => {
+    // Term to be added
+    const newTerm = this.state.term;
+  
     // Update the array of filter tags with the new tag
     const filterTags = [
       ...this.state.filterTags,
-      { id: uniqid(), text: filterTerm }
+      { id: uniqid(), text: newTerm }
     ];
 
-    this.setState({ filterTags });
+    this.setState({ filterTags, term: '' });
   };
 
   handleFilterTagRemove = (filterTermId) => {
@@ -60,10 +81,19 @@ class CreateFilterForm extends Component {
       Router.push({ pathname: '/dashboard' });
   };
 
+  handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      this.handleAddTag();
+    }
+  };
+
   render() {
-    const { name, filterTags } = this.state;
+    const { name, filterTags, term } = this.state;
     // Generate filterTerms (array of strings) from filterTags (array of { id, text }).
     // We do this because GraphQL expects filterTerms to be an array of strings.
+
+    const tags = makeTags(filterTags, this.handleFilterTagRemove);
     const filterTerms = filterTags.map(ftag => ftag.text);
 
     return (
@@ -77,63 +107,58 @@ class CreateFilterForm extends Component {
       >
         {(createFilter, { loading, error }) => (
           // TODO(SW): Disable the form while loading=true to prevent double submit
-          <section className="section has-background-white-ter" style={{ height: '100vh' }}>
-            <div className="container">
-              <div className="columns">
-                <div className="column">
-                  <div className="box">
-                    <form action='post'>
-                      <div className='box'>
-                        <div className="field">
-                          <label className="label">Filter Name</label>
-                          <div className="control">
-                            <input
-                              className="input"
-                              name='name'
-                              type="text"
-                              placeholder="Filter Name..."
-                              value={name}
-                              onChange={this.handleInputChange}
-                            />
-                          </div>
-                        </div>
-
-                        <AddFilterTerm
-                          filterTags={filterTags}
-                          loading={loading}
-                          removeTag={this.handleFilterTagRemove}
-                          addTag={this.handleFilterTagAdd}
-                        />
-
-                        <div className="field is-grouped">
-                          <div className="control">
-                            <Button
-                              className='is-primary'
-                              isDisabled={loading}
-                              isLoading={loading}
-                              onClick={this.createHandleSubmit(createFilter)}
-                            >
-                              Submit
-                            </Button>
-                          </div>
-                          <div className="control">
-                            <Button
-                              isLoading={loading}
-                              isDisabled={loading}
-                            >
-                              <Link href='/dashboard'>
-                                <a className='has-text-black'>Cancel</a>
-                              </Link>
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
+          <form action='post' autoComplete='off'>
+            <div className='columns is-multiline'>
+              <div className='column is-full'>
+                <div className='field'>
+                  <label>Filter Name</label>
+                  <div className='control'>
+                    <input
+                      className='input'
+                      type='text'
+                      name='name'
+                      placeholder='Filter name'
+                      onChange={this.handleInputChange}
+                      onKeyDown={this.handleEnter}
+                      value={name}
+                      />
                   </div>
                 </div>
               </div>
+
+              <div className='column is-full'>
+                <div className='field'>
+                  <label>Filter Terms</label>
+                  <div className='input'>
+                    <ul className={styles.inputTerms}>{tags}</ul>
+                    {/* // TODO(SW): Make the styling consistent on the innter input */}
+                    <input
+                      onChange={this.handleInputChange}
+                      onKeyDown={this.handleEnter}
+                      className={`input ${styles.inputInner}`}
+                      name='term'
+                      type='text'
+                      placeholder='Add filter term'
+                      value={term}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className='column'>
+                <Button
+                  className='is-primary is-outlined is-pulled-left is-pulled-right'
+                  isLoading={loading}
+                  isDisabled={loading}
+                  onClick={this.handleAddTag}
+                >
+                  <span className='icon'>
+                    <i className='fas fa-plus'></i>
+                  </span>
+                  <span>Add Term</span>
+                </Button>
+              </div>
             </div>
-          </section>
+          </form>
         )}
       </Mutation>
     );
