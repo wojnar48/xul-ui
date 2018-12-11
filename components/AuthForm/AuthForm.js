@@ -31,16 +31,9 @@ class AuthForm extends Component {
   // Creates a submit handler and closes over the mutation fn provided as a prop
   createHandleSubmit = (mutationCb) =>
     async (e) => {
-      const { router } = this.props;
-
       try {
         e.preventDefault();
         await mutationCb({ variables: this.state });
-
-        // Redirect to the dashboard
-        // TODO(SW): Investigate why using this.props.router and Router does not work.
-        window.location.href = '/dashboard';
-        // router.push('/dashboard');
 
         // Clear state
         this.setState({ email: '', username: '', password: '', error: {} });
