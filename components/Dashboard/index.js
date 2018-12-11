@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import { Query } from 'react-apollo';
 
 import FilterTable from './FilterTable';
 import { Button } from '../Button';
 import User from '../User';
-import AuthFormContainer from '../AuthForm';
 import { ALL_FILTERS_QUERY } from '../../graphql';
 
 
@@ -14,49 +13,54 @@ class Dashboard extends Component {
   // TODO(SW): See if we can protect the route using getInitialProps in the app container
 
   render() {
+    const { router } = this.props;
+
     return (
       <User>
         {({ data }) => {
           // Show the auth form if no current user is present
-          if (!data.me) return <AuthFormContainer />;
+          if (!data.me) {
+            router.replace('/login');
+            return <div />;
+          };
 
           return (
             <section className='section dashboard-section'>
-            <div className='container dashboard-container'>
-              <div className='columns'>
-                <div className='column'>
-                  <nav className='level'>
-                    <div className='level-left'>
-                      <h3 className='title has-text-grey'>Filters</h3>
+              <div className='container dashboard-container'>
+                <div className='columns'>
+                  <div className='column'>
+                    <nav className='level'>
+                      <div className='level-left'>
+                        <h3 className='title has-text-grey'>Filters</h3>
+                      </div>
+                      <div className='level-right'>
+                        <Button
+                          className='is-primary'
+                          onClick={() => Router.push('/create-filter')}
+                        >
+                          Add filter
+                        </Button>
+                      </div>
+                    </nav>
+                    <div className='box'>
+                      <Query query={ALL_FILTERS_QUERY}>
+                        {({ data, loading, error }) => {
+                          if (loading) return <p>Loading...</p>;
+                          if (error) return <p>{`Error: ${error.message}`}</p>
+                          
+                          return (
+                            <FilterTable
+                              filters={data.filters}
+                              loading={loading}
+                            />
+                          );
+                        }}
+                      </Query>
                     </div>
-                    <div className='level-right'>
-                      <Button
-                        className='is-primary'
-                        onClick={() => Router.push('/create-filter')}
-                      >
-                        Add filter
-                      </Button>
-                    </div>
-                  </nav>
-                  <div className='box'>
-                    <Query query={ALL_FILTERS_QUERY}>
-                      {({ data, loading, error }) => {
-                        if (loading) return <p>Loading...</p>;
-                        if (error) return <p>{`Error: ${error.message}`}</p>
-                        
-                        return (
-                          <FilterTable
-                            filters={data.filters}
-                            loading={loading}
-                          />
-                        );
-                      }}
-                    </Query>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
           )
         }}
       </User>
@@ -64,5 +68,5 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
 
