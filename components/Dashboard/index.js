@@ -3,6 +3,7 @@ import Router, { withRouter } from 'next/router';
 import { Query } from 'react-apollo';
 
 import FilterTable from './FilterTable';
+import CreateFilterModal from './CreateFilterModal';
 import { Button } from '../Button';
 import User from '../User';
 import { ALL_FILTERS_QUERY } from '../../graphql';
@@ -34,12 +35,7 @@ class Dashboard extends Component {
                         <h3 className='title has-text-grey'>Filters</h3>
                       </div>
                       <div className='level-right'>
-                        <Button
-                          className='is-primary'
-                          onClick={() => Router.push('/create-filter')}
-                        >
-                          Add filter
-                        </Button>
+                        <CreateFilterModal />
                       </div>
                     </nav>
                     <div className='box'>
