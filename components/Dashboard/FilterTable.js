@@ -56,19 +56,29 @@ class FilterTable extends Component {
             <table className='table is-hoverable is-fullwidth'>
               <thead>
                 <tr>
+                  <th className='has-text-centered has-text-grey'>Hits</th>
                   <th className='has-text-centered has-text-grey'>Name</th>
                   <th className='has-text-centered has-text-grey'>Filter Terms</th>
                   <th className='has-text-centered has-text-grey'>Created</th>
-                  <th className='has-text-centered has-text-grey'>Actions</th>
+                  <th className='has-text-centered has-text-grey'>Edit/Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {filters.map(filter => (
                   <tr key={filter.id}>
+                    <td className='has-text-centered'>0</td>
                     <td className='has-text-centered'>{filter.name}</td>
                     <td className='has-text-centered'>{renderTags(filter.filterTerms)}</td>
                     <td className='has-text-centered'>{filter.createdAt}</td>
                     <td className='has-text-centered'>
+                      <Button
+                        className='is-small'
+                        onClick={() => ({})}
+                        isLoading={loading}
+                        isDisabled={loading}
+                      >
+                        Edit
+                      </Button>
                       <Button
                         className='is-danger is-small'
                         onClick={() => this.handleDeleteFilter(filter.id, deleteFilter)}
