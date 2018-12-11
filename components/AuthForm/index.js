@@ -35,6 +35,7 @@ const AuthFormContainer = (props) => {
                     mutation={mutationCallback}
                     isLoading={loading}
                     isLogin={isLogin}
+                    error={error}
                   />
               )}
               </Mutation>

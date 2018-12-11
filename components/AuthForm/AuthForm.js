@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'next/router';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+
+import Error from '../Error';
 
 
 class AuthForm extends Component {
@@ -17,6 +20,7 @@ class AuthForm extends Component {
     username: '',
     email: '',
     password: '',
+    error: {},
   };
 
   handleInputChange = (e) => {
@@ -27,19 +31,33 @@ class AuthForm extends Component {
   // Creates a submit handler and closes over the mutation fn provided as a prop
   createHandleSubmit = (mutationCb) =>
     async (e) => {
-      e.preventDefault();
-      await mutationCb({ variables: this.state });
+      const { router } = this.props;
 
-      // Redirect to the dashboard
-      // TODO(SW): Investigate why using this.props.router and Router does not work.
-      window.location.href = '/dashboard';
+      try {
+        e.preventDefault();
+        await mutationCb({ variables: this.state });
 
-      // Clear state
-      this.setState({ email: '', username: '', password: '' });
+        // Redirect to the dashboard
+        // TODO(SW): Investigate why using this.props.router and Router does not work.
+        window.location.href = '/dashboard';
+        // router.push('/dashboard');
+
+        // Clear state
+        this.setState({ email: '', username: '', password: '', error: {} });
+      }
+        catch (error) {
+          this.setState({ error });
+          throw error;
+        }
+  };
+
+  clearError = () => {
+    this.setState({ error: {} });
   };
 
   render() {
     const { isLogin, isLoading, mutation } = this.props;
+    const { error } = this.state;
 
     return (
       <form method='post' onSubmit={this.createHandleSubmit(mutation)}>
@@ -47,22 +65,23 @@ class AuthForm extends Component {
           <h2 className="subtitle is-4 has-text-centered has-text-grey">
             {isLogin ? 'Sign in to your account' : 'Sign up for Lax'}
           </h2>
-
           <div className="field">
             <div className="control has-text-centered">
               {
                 isLogin
-                ? `Don't have an account yet?`
+                ? `Don't have an account?`
                 : 'Already have an account?'
               }
               {' '}
               {
                 isLogin
-                ? <Link href='/signup'><a>Sign up here</a></Link>
-                : <Link href='/login'><a>Sign in here</a></Link>
+                ? <Link href='/signup'><a>Sign up!</a></Link>
+                : <Link href='/login'><a>Sign in!</a></Link>
               }
             </div>
           </div>
+
+          <Error error={error} handleDelete={this.clearError} />
 
           <div className="field">
             <div className="control">
@@ -73,7 +92,8 @@ class AuthForm extends Component {
                 className="input is-medium"
                 autoComplete='off'
                 onChange={this.handleInputChange}
-                />
+                value={this.state.email}
+              />
             </div>
           </div>
 
@@ -124,4 +144,4 @@ class AuthForm extends Component {
   }
 }
 
-export default AuthForm;
+export default withRouter(AuthForm);

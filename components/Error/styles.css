@@ -1,0 +1,12 @@
+.errorContainer {
+  border: 1px solid hsl(348, 100%, 61%);
+  margin-bottom: 1rem;
+}
+
+.errorDelete {
+  background: hsl(348, 100%, 61%);
+}
+
+.errorDelete:hover {
+  background: hsl(348, 100%, 61%);
+}
