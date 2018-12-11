@@ -163,6 +163,7 @@ class CreateFilterForm extends Component {
               <div className='column is-full modal-card-foot'>
                 <Button
                   className='is-primary'
+                  onClick={this.createHandleSubmit(createFilter)}
                 >
                   Create Filter
                 </Button>
