@@ -1,12 +1,13 @@
 import App, { Container } from 'next/app';
-import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
-import withData from '../lib/withData';
-import { ApolloClient } from 'apollo-boost';
 
+import Page from '../components/Page';
+import withData from '../lib/withData';
+
+
+// Creates a custom component that is used by Next.js to wrap individual pages.
+// See: https://nextjs.org/docs/#custom-app.
 class AppContainer extends App {
-  // Creates a custom component that is used by Next.js to wrap individual pages.
-  // See: https://nextjs.org/docs/#custom-app.
   render() {
     // `this.props.apollo` is available because of the HOC `withData` generates
     const { Component, apollo } = this.props;
@@ -23,4 +24,6 @@ class AppContainer extends App {
   }
 }
 
+// Wrapping in withData makes the apollo client accessible
+// via this.props.
 export default withData(AppContainer);
