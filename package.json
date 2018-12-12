@@ -1,7 +1,7 @@
 {
-  "name": "lax-ui",
+  "name": "xul-ui",
   "version": "1.0.0",
-  "description": "A UI for interacting with the Lax API",
+  "description": "A UI for interacting with the Xul API",
   "main": "index.js",
   "scripts": {
     "dev": "next -p 7777",

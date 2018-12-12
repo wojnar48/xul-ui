@@ -56,7 +56,7 @@ class AuthForm extends Component {
       <form method='post' onSubmit={this.createHandleSubmit(mutation)}>
         <fieldset disabled={isLoading} aria-busy={isLoading} style={{ border: 'none' }}>
           <h2 className="subtitle is-4 has-text-centered has-text-grey">
-            {isLogin ? 'Sign in to your account' : 'Sign up for Lax'}
+            {isLogin ? 'Sign in to your account' : 'Sign up for Xul'}
           </h2>
           <div className="field">
             <div className="control has-text-centered">

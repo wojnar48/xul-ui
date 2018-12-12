@@ -9,7 +9,7 @@ const Meta = () => (
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
     <link rel="stylesheet" type="text/css" href="/static/bulma.min.css" />
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <title>Lax UI</title>
+    <title>Xul UI</title>
   </Head>
 );
 
