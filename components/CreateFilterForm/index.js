@@ -32,6 +32,7 @@ class CreateFilterForm extends Component {
   state = {
     name: '',
     term: '',
+    resultFilter: 'NOFILTER',
     filterTags: [],
   };
 
@@ -101,6 +102,7 @@ class CreateFilterForm extends Component {
 
     return (
       // TODO(SW): See if using update instead of refetchQueries would be better
+      // TODO(SW): Ask the user if results with no URLs should be added to the result set.
       <Mutation
         mutation={CREATE_FILTER_MUTATION}
         onCompleted={() => NProgress.done()}
@@ -125,6 +127,21 @@ class CreateFilterForm extends Component {
                       onKeyDown={this.handleEnter}
                       value={name}
                       />
+                  </div>
+                </div>
+              </div>
+
+              <div className='column is-full'>
+                <div className='field'>
+                  <label>Results Filter</label>
+                  <div class="control">
+                    <div class="select">
+                      <select name='resultFilter' onChange={this.handleInputChange}>
+                        <option value='NOFILTER'>No filter</option>
+                        <option value='HIPOINTS'>By max points</option>
+                        <option value='HICOMMENTS'>By max comments</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
