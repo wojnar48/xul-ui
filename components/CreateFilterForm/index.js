@@ -91,7 +91,7 @@ class CreateFilterForm extends Component {
   };
 
   render() {
-    const { name, filterTags, term } = this.state;
+    const { name, filterTags, resultFilter, term } = this.state;
     const { toggleModalState } = this.props;
   
     // Generate filterTerms (array of strings) from filterTags (array of { id, text }).
@@ -108,7 +108,7 @@ class CreateFilterForm extends Component {
         onCompleted={() => NProgress.done()}
         onError={() => NProgress.done()}
         refetchQueries={[{ query: ALL_FILTERS_QUERY }]}
-        variables={{ name, filterTerms }}
+        variables={{ name, filterTerms, resultFilter }}
       >
         {(createFilter, { loading, error }) => (
           // TODO(SW): Disable the form while loading=true to prevent double submit
@@ -134,8 +134,8 @@ class CreateFilterForm extends Component {
               <div className='column is-full'>
                 <div className='field'>
                   <label>Results Filter</label>
-                  <div class="control">
-                    <div class="select">
+                  <div className='control'>
+                    <div className='select'>
                       <select name='resultFilter' onChange={this.handleInputChange}>
                         <option value='NOFILTER'>No filter</option>
                         <option value='HIPOINTS'>By max points</option>

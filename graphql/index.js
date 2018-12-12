@@ -53,10 +53,12 @@ export const CREATE_FILTER_MUTATION = gql`
   mutation CREATE_FILTER_MUTATION(
     $name: String!
     $filterTerms: [String!]!
+    $resultFilter: String!
   ) {
     createFilter(
       name: $name
       filterTerms: $filterTerms
+      resultFilter: $resultFilter
     ) {
       id
       name
